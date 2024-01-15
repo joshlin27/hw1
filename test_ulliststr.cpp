@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 #include "ulliststr.h"
 
@@ -9,5 +10,4 @@
 
 int main(int argc, char* argv[])
 {
-
 }
