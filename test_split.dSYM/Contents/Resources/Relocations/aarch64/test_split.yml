@@ -1,0 +1,9 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     test_split
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003E28, symSize: 0x18 }
+  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003E28, symSize: 0x18 }
+  - { offsetInCU: 0x26, offset: 0xA7, size: 0x8, addend: 0x0, symName: __Z5splitRP4NodeS1_S1_, symObjAddr: 0x0, symBinAddr: 0x100003E40, symSize: 0x160 }
+  - { offsetInCU: 0xA1, offset: 0x122, size: 0x8, addend: 0x0, symName: __Z5splitRP4NodeS1_S1_, symObjAddr: 0x0, symBinAddr: 0x100003E40, symSize: 0x160 }
+...
