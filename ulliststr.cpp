@@ -28,7 +28,8 @@ size_t ULListStr::size() const
 // WRITE YOUR CODE HERE
 
 void ULListStr::push_back(const std::string& val) {
-  if (head_ == nullptr) {
+  if (head_ == nullptr) { //check for empty list
+    //create the new item, set value and pointers, increment size, move on
     Item* newItem = new Item;
     newItem -> last = 1;
     (newItem -> val)[0] = val;
@@ -39,6 +40,7 @@ void ULListStr::push_back(const std::string& val) {
     size_++;
     return;
   }
+  //if tail is full, we also need a new item
   if (tail_ -> last == ARRSIZE) {
     Item* newItem = new Item;
     newItem -> last = 1;
@@ -48,15 +50,20 @@ void ULListStr::push_back(const std::string& val) {
     newItem -> next = nullptr;
     tail_ = newItem;
   }
+  //otherwise, just put val in the next slot
   else {
     (tail_ -> val)[(tail_ -> last)++] = val;
   }
+  //make sure to increment size
   size_++;
 }
 
 void ULListStr::pop_back() {
+  //first, decrement last
   (tail_ -> last)--;
+  //only if the last item is now completely empty, do we need to do more stuff
   if (tail_ -> last - tail_ -> first == 0) {
+    //check for 1 item list, delete, decrement size, return
     if (tail_ -> prev == nullptr) {
       Item* temp = tail_;
       head_ = nullptr;
@@ -65,6 +72,7 @@ void ULListStr::pop_back() {
       size_--;
       return;
     }
+    //otherwise, update pointers and delete
     Item* temp = tail_;
     tail_ = tail_ -> prev;
     tail_ -> next = nullptr;
@@ -74,6 +82,7 @@ void ULListStr::pop_back() {
 }
 
 void ULListStr::push_front(const std::string& val) {
+  //check for empty list
   if (head_ == nullptr) {
     Item* newItem = new Item;
     newItem -> last = 1;
@@ -85,6 +94,7 @@ void ULListStr::push_front(const std::string& val) {
     size_++;
     return;
   }
+  //if the front of the first list is occupied, we need a new item
   if (head_ -> first == 0) {
     Item* newItem = new Item;
     head_ -> prev = newItem;
@@ -94,6 +104,7 @@ void ULListStr::push_front(const std::string& val) {
     newItem -> next = head_;
     head_ = newItem;
   }
+  //otherwise, just place val in the new first slot
   else {
     (head_ -> val)[--(head_ -> first)] = val;
   }
@@ -101,9 +112,10 @@ void ULListStr::push_front(const std::string& val) {
 }
 
 void ULListStr::pop_front() {
+  //first, move the first index up
   (head_ -> first)++;
-  if (head_ -> last - head_ -> first == 0) {
-    if (head_ -> next == nullptr) {
+  if (head_ -> last - head_ -> first == 0) { //check for if first item is now empty
+    if (head_ -> next == nullptr) { //check for 1 item list
       Item* temp = head_;
       head_ = nullptr;
       tail_ = nullptr;
@@ -111,6 +123,7 @@ void ULListStr::pop_front() {
       size_--;
       return;
     }
+    //otherwise just delete and update pointers
     Item* temp = head_;
     head_ = head_ -> next;
     delete temp;
@@ -120,29 +133,28 @@ void ULListStr::pop_front() {
 }
 
 std::string const & ULListStr::back() const {
+  //simply return the tail's last item
   return tail_ -> val[tail_ -> last - 1];
 }
 
 std::string const & ULListStr::front() const {
+  //simply return the head's first item
   return head_ -> val[head_ -> first];
 }
 
 std::string* ULListStr::getValAtLoc(size_t loc) const {
   Item* temp = head_;
   while (true) {
-    if (temp == nullptr) {
-      //std::cout << "nullptr" << std::endl;
+    if (temp == nullptr) { //if empty or invalid index
       return NULL;
     }
-    //std::cout << temp -> last << " " << temp -> first << std::endl;
-    if (loc <= temp -> last - temp -> first - 1) {
-      //std::cout << "if" << std::endl;
+    if (loc <= temp -> last - temp -> first - 1) { //if loc is now a valid index, return its value
       return &((temp -> val[loc + temp -> first]));
     }
-    else {
+    else { //otherwise, keep going by subtracting the number of values
       loc -= (temp -> last - temp -> first);
-      //std::cout << "else" << loc << std::endl;
     }
+    //update temp
     temp = temp -> next;
   }
 }
